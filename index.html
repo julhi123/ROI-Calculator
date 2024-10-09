@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Calculator for {{company_name}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        .calculator { max-width: 500px; margin: 0 auto; }
+        input, select { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>ROI Calculator for {{company_name}}</h2>
+        <input type="number" id="currentRevenue" placeholder="Current Annual Revenue ($)">
+        <input type="number" id="currentGrowthRate" placeholder="Current Growth Rate (%)">
+        <input type="number" id="fundingAmount" placeholder="Funding Amount ($)">
+        <select id="timeline">
+            <option value="1">1 Year</option>
+            <option value="2">2 Years</option>
+            <option value="3">3 Years</option>
+        </select>
+        <button onclick="calculateROI()">Calculate ROI</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const currentRevenue = parseFloat(document.getElementById('currentRevenue').value);
+            const currentGrowthRate = parseFloat(document.getElementById('currentGrowthRate').value) / 100;
+            const fundingAmount = parseFloat(document.getElementById('fundingAmount').value);
+            const timeline = parseInt(document.getElementById('timeline').value);
+
+            // Simple ROI calculation (this should be adjusted based on your specific model)
+            const projectedGrowthRate = currentGrowthRate * 1.5; // Assuming 50% increase in growth rate with funding
+            const projectedRevenue = currentRevenue * Math.pow((1 + projectedGrowthRate), timeline);
+            const roi = ((projectedRevenue - currentRevenue - fundingAmount) / fundingAmount) * 100;
+
+            document.getElementById('result').innerHTML = `
+                Projected Revenue after ${timeline} year(s): $${projectedRevenue.toFixed(2)}<br>
+                ROI: ${roi.toFixed(2)}%
+            `;
+        }
+    </script>
+</body>
+</html>
